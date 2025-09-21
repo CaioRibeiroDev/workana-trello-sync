@@ -1,28 +1,21 @@
-// import puppeteer from 'puppeteer';
-import chromium from 'chrome-aws-lambda';
+import puppeteer from 'puppeteer';
 
 export async function getProjects() {
-  // const browser = await puppeteer.launch({
-  //   headless: true,  
-  //   args: ["--no-sandbox", "--disable-setuid-sandbox"]
-  // });
+  const browser = await puppeteer.launch({
+    headless: true,  
+    args: ["--no-sandbox", "--disable-setuid-sandbox"]
+  });
 
-  const browser = await chromium.puppeteer.launch({
-  args: chromium.args,
-  defaultViewport: chromium.defaultViewport,
-  executablePath: await chromium.executablePath,
-  headless: chromium.headless,
-});
+  
 
   const page = await browser.newPage();
 
-  // await page.goto("https://www.workana.com/login")
-  await page.goto("https://www.workana.com/jobs?language=pt")
+  await page.goto("https://www.workana.com/login")
   await page.type("#email-input", process.env.WORKANA_EMAIL!);
   await page.type("#password-input", process.env.WORKANA_PASSWORD!);
   await page.click("button[type=submit]");
   
-  await page.goto("https://www.workana.com/jobs")
+  await page.goto("https://www.workana.com/jobs?language=pt")
 
   const projects = await page.evaluate(() => {
     return Array.from(document.querySelectorAll(".project-item")).map((el) => ({
