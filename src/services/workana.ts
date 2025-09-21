@@ -1,10 +1,18 @@
-import puppeteer from 'puppeteer';
+// import puppeteer from 'puppeteer';
+import chromium from 'chrome-aws-lambda';
 
 export async function getProjects() {
-  const browser = await puppeteer.launch({
-    headless: true,  
-    args: ["--no-sandbox", "--disable-setuid-sandbox"]
-  });
+  // const browser = await puppeteer.launch({
+  //   headless: true,  
+  //   args: ["--no-sandbox", "--disable-setuid-sandbox"]
+  // });
+
+  const browser = await chromium.puppeteer.launch({
+  args: chromium.args,
+  defaultViewport: chromium.defaultViewport,
+  executablePath: await chromium.executablePath,
+  headless: chromium.headless,
+});
 
   const page = await browser.newPage();
 
