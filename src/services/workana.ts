@@ -8,7 +8,8 @@ export async function getProjects() {
 
   const page = await browser.newPage();
 
-  await page.goto("https://www.workana.com/login")
+  // await page.goto("https://www.workana.com/login")
+  await page.goto("https://www.workana.com/jobs?language=pt")
   await page.type("#email-input", process.env.WORKANA_EMAIL!);
   await page.type("#password-input", process.env.WORKANA_PASSWORD!);
   await page.click("button[type=submit]");
